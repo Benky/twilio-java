@@ -32,7 +32,6 @@ import java.net.URLEncoder;
 
 public class Verb {
     
-    
     protected String tag;
     protected String body;
     protected HashMap<String, String> attributes;
@@ -88,7 +87,6 @@ public class Verb {
         try {
             return URLEncoder.encode(this.toXML(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
             return null;
         }
     }
