@@ -6,7 +6,7 @@
 
     <groupId>twilio-java-rest</groupId>
     <artifactId>twilio-java-rest</artifactId>
-    <version>3.0.0-GDC</version>
+    <version>3.0.1-GDC</version>
 
     <dependencies>
         <dependency>
@@ -36,7 +36,7 @@
         </plugins>
     </build>
 
- <distributionManagement>
+    <distributionManagement>
         <repository>
             <id>thirdparty</id>
             <url>https://maven.gooddata.com/nexus/content/repositories/thirdparty/</url>

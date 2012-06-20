@@ -38,16 +38,26 @@ import java.util.Map;
 
 public class TwilioRestClient {
     private static final String DEFAULT_ENDPOINT = "https://api.twilio.com";
+    private static final int DEFAULT_CONNECT_TIMEOUT = 10000;
+    private static final int DEFAULT_READ_TIMEOUT = 300000;
 
     private final String endpoint;
     private final String accountSid;
     private final String authToken;
+    private final int connectTimeout;
+    private final int readTimeout;
+
 
     public TwilioRestClient(String accountSid, String authToken) {
         this(accountSid, authToken, DEFAULT_ENDPOINT);
     }
 
     public TwilioRestClient(final String accountSid, final String authToken, final String endpoint) {
+        this(accountSid, authToken, endpoint, DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT);
+    }
+
+    public TwilioRestClient(final String accountSid, final String authToken, final String endpoint,
+                            final int connectTimeout, final int readTimeout) {
         Validate.notEmpty(accountSid, "AccountSid cannot be NULL");
         Validate.notEmpty(authToken, "AuthToken cannot be NULL");
         Validate.notEmpty(endpoint, "Endpoint cannot be NULL");
@@ -55,6 +65,8 @@ public class TwilioRestClient {
         this.accountSid = accountSid;
         this.authToken = authToken;
         this.endpoint = endpoint;
+        this.connectTimeout = connectTimeout;
+        this.readTimeout = readTimeout;
     }
 
     /*
@@ -84,8 +96,9 @@ public class TwilioRestClient {
             final HttpURLConnection con = (HttpURLConnection) resturl.openConnection();
             final String encodeuserpass = new String(Base64.encodeBase64((this.accountSid + ":" + this.authToken).getBytes()));
 
+            con.setConnectTimeout(connectTimeout);
+            con.setReadTimeout(readTimeout);
             con.setRequestProperty("Authorization", "Basic " + encodeuserpass);
-
             con.setDoOutput(true);
 
             switch (method) {
